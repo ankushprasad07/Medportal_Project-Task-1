@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MedPortal Home</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body, html {
+      height: 100%;
+      background: #f5f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: #333;
+    }
+
+    .container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      max-width: 380px;
+      width: 100%;
+      padding: 40px 30px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #2c3e50;
+      margin-bottom: 50px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      user-select: none;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px 0;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      font-size: 1.15rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .btn-register {
+      background-color: #3498db;
+      color: white;
+      box-shadow: 0 4px 12px rgba(52, 152, 219, 0.5);
+    }
+
+    .btn-register:hover {
+      background-color: #2980b9;
+      box-shadow: 0 6px 16px rgba(41, 128, 185, 0.6);
+    }
+
+    .btn-login {
+      background-color: transparent;
+      color: #3498db;
+      border: 2px solid #3498db;
+      font-weight: 700;
+    }
+
+    .btn-login:hover {
+      background-color: #3498db;
+      color: white;
+      box-shadow: 0 6px 16px rgba(52, 152, 219, 0.5);
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2.4rem;
+      }
+
+      .btn {
+        font-size: 1rem;
+        padding: 12px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>MedPortal</h1>
+    <a href="{% url 'register' %}" class="btn btn-register">Register</a>
+    <a href="{% url 'login' %}" class="btn btn-login">Login</a>
+  </div>
+</body>
+</html>
