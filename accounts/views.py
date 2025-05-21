@@ -4,6 +4,11 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
 
 
 def home_view(request):
@@ -26,9 +31,16 @@ def register_view(request):
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user_exists = User.objects.filter(username=username).exists()
+
+        if not user_exists:
+            messages.error(request, "Invalid username.")
+        elif not form.is_valid():
+            messages.error(request, "Invalid password.")
+        else:
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
@@ -36,8 +48,12 @@ def login_view(request):
                     return redirect('patient_dashboard')
                 elif user.user_type == 'doctor':
                     return redirect('doctor_dashboard')
+            else:
+                messages.error(request, "Invalid username or password.")
+
     else:
         form = AuthenticationForm()
+    
     return render(request, 'accounts/login.html', {'form': form})
 
 
