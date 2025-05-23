@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>All Blogs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body class="bg-gray-100 font-sans text-gray-800">
+    {% load blog_extras %}
+
+    <!-- Header -->
+    <header class="bg-blue-700 p-4 shadow-md sticky top-0 z-50">
+      <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-white text-xl font-bold">All Blogs</h1>
+        <a
+          href="{% url 'patient_dashboard' %}"
+          class="bg-white text-blue-700 px-4 py-2 rounded hover:bg-blue-100 transition focus:outline-none focus:ring-2 focus:ring-blue-300"
+          aria-label="Back to Patient Dashboard"
+        >
+          ← Back to Dashboard
+        </a>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="container mx-auto px-4 py-8">
+      {% for category, posts in categories.items %}
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-6 border-b border-gray-300 pb-1">
+          {{ category }}
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {% for post in posts %}
+          <article
+            class="bg-white rounded-lg shadow-md p-5 flex flex-col hover:shadow-lg transition"
+          >
+            <h3
+              class="text-lg font-bold text-gray-900 mb-3"
+              title="{{ post.title }}"
+            >
+              {{ post.title }}
+            </h3>
+            <img
+              src="{{ post.image.url }}"
+              alt="Blog image for {{ post.title }}"
+              class="w-full h-40 object-cover rounded mb-4"
+            />
+            <p class="text-gray-700 text-sm flex-grow">
+              {{ post.summary|smart_truncate }}
+            </p>
+            <!-- Doctor Info -->
+            <p
+              class="text-sm text-blue-700 font-medium mt-3 flex items-center gap-1"
+            >
+              <svg
+                class="w-4 h-4 text-blue-500"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"
+                />
+              </svg>
+              Dr. {{ post.doctor.get_full_name|default:post.doctor.username }}
+            </p>
+          </article>
+
+          {% endfor %}
+        </div>
+      </section>
+      {% endfor %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center text-sm text-gray-500 py-4 border-t">
+      &copy; 2025 Med-Portal Project
+    </footer>
+  </body>
+</html>

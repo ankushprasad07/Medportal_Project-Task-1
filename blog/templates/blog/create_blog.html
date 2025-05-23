@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Create Blog Post</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body class="bg-gray-100 font-sans text-gray-800 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-blue-700 p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-white text-xl font-bold">Create Blog Post</h1>
+            <a href="{% url 'doctor_dashboard' %}" 
+               class="bg-white text-blue-700 px-4 py-2 rounded hover:bg-blue-100 transition focus:outline-none focus:ring-2 focus:ring-blue-300"
+               aria-label="Back to Doctor Dashboard">
+                ← Go Back
+            </a>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <main class="container mx-auto flex-grow px-4 py-8">
+        <form method="post" enctype="multipart/form-data" class="max-w-xl mx-auto bg-white rounded-lg shadow p-6">
+            {% csrf_token %}
+            
+            <div class="space-y-6">
+                {{ form.non_field_errors }}
+                
+                {% for field in form %}
+                    <div>
+                        <label for="{{ field.id_for_label }}" class="block text-gray-700 font-semibold mb-1">
+                            {{ field.label }}{% if field.field.required %}<span class="text-red-600">*</span>{% endif %}
+                        </label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <p class="text-xs text-gray-500 mt-1">{{ field.help_text }}</p>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <p class="text-red-600 text-sm mt-1">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <button type="submit" 
+                class="mt-6 w-full bg-blue-700 text-white py-2 rounded hover:bg-blue-800 transition focus:outline-none focus:ring-2 focus:ring-blue-500">
+                Post
+            </button>
+        </form>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center text-sm text-gray-500 py-4 border-t">
+        &copy; 2025 Med-Portal Project
+    </footer>
+
+</body>
+</html>

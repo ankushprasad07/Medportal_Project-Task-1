@@ -1,49 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Patient Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                },
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
             },
-        }
+          },
+        },
+      };
     </script>
-</head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center py-10 px-4">
-
+  </head>
+  <body
+    class="bg-gray-100 min-h-screen flex items-center justify-center py-10 px-4"
+  >
     <div class="bg-white shadow-xl rounded-lg p-8 max-w-3xl w-full">
-        <div class="flex items-center justify-between mb-6">
-            <h2 class="text-3xl font-bold text-gray-800">
-                Welcome, {{ user.first_name }} {{ user.last_name }} <span class="text-sm font-medium text-gray-500">(Patient)</span>
-            </h2>
-            <a href="{% url 'logout' %}" class="text-red-600 hover:text-red-800" title="Logout">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
-                </svg>
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-3xl font-bold text-gray-800">
+          Welcome, {{ user.first_name }} {{ user.last_name }}
+          <span class="text-sm font-medium text-gray-500">(Patient)</span>
+        </h2>
+        <a
+          href="{% url 'logout' %}"
+          class="text-red-600 hover:text-red-800"
+          title="Logout"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-7 w-7"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1"
+            />
+          </svg>
+        </a>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-8 items-start">
+        <img
+          src="{{ user.profile_picture.url }}"
+          alt="Profile Picture"
+          class="w-40 h-40 rounded-full object-cover border-4 border-green-600 shadow-md"
+        />
+
+        <div
+          class="flex-1 bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm"
+        >
+          <h3 class="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">
+            Your Details
+          </h3>
+          <ul class="space-y-4 text-gray-800 text-base leading-relaxed">
+            <li>
+              <span class="font-semibold">Username:</span> {{ user.username }}
+            </li>
+            <li><span class="font-semibold">Email:</span> {{ user.email }}</li>
+            <li>
+              <span class="font-semibold">Address:</span>
+              {{ user.address_line1 }}, {{ user.city }}, {{ user.state }} - {{ user.pincode }}
+            </li>
+            <li>
+              <span class="font-semibold">User Type:</span> {{ user.user_type }}
+            </li>
+          </ul>
+          <div class="mt-6">
+            <a
+              href="{% url 'blog:all_blogs' %}"
+              class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded shadow"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 mr-2"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  d="M2 5a2 2 0 012-2h12a2 2 0 012 2v11a1 1 0 01-1.447.894L10 14.118l-6.553 2.776A1 1 0 012 16V5z"
+                />
+              </svg>
+              View All Blogs
             </a>
+          </div>
         </div>
-
-        <div class="flex flex-col md:flex-row gap-8 items-start">
-            <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="w-40 h-40 rounded-full object-cover border-4 border-green-600 shadow-md">
-
-            <div class="flex-1 bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm">
-                <h3 class="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">Your Details</h3>
-                <ul class="space-y-4 text-gray-800 text-base leading-relaxed">
-                    <li><span class="font-semibold">Username:</span> {{ user.username }}</li>
-                    <li><span class="font-semibold">Email:</span> {{ user.email }}</li>
-                    <li><span class="font-semibold">Address:</span> {{ user.address_line1 }}, {{ user.city }}, {{ user.state }} - {{ user.pincode }}</li>
-                    <li><span class="font-semibold">User Type:</span> {{ user.user_type }}</li>
-                </ul>
-            </div>
-        </div>
+      </div>
     </div>
-
-</body>
+  </body>
 </html>
